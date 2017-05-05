@@ -50,7 +50,7 @@ write_files:
     MaxLevelConsole=warning
     RateLimitInterval=1s
     RateLimitBurst=20000
-  
+
 - path: "/etc/docker/daemon.json"
   permissions: "0644"
   owner: "root"
@@ -241,6 +241,11 @@ write_files:
     # As a workaround, the Internal LB(ILB) listens for apiserver traffic on port 4443 and the External LB(ELB) on port 443
     # This IPTable rule then redirects ILB traffic to port 443 in the prerouting chain
     iptables -t nat -A PREROUTING -p tcp --dport 4443 -j REDIRECT --to-port 443
+
+    # SNAT outbound traffic from pods to destinations outside of VNET.
+    if [[ "{{WrapAsVariable "networkPolicy"}}" == "azure" ]]; then
+      iptables -t nat -A POSTROUTING -m iprange ! --dst-range 168.63.129.16 -m addrtype ! --dst-type local ! -d {{WrapAsVariable "vnetCidr"}} -j MASQUERADE
+    fi
 
     sed -i "s|<kubernetesAddonManagerSpec>|{{WrapAsVariable "kubernetesAddonManagerSpec"}}|g" "/etc/kubernetes/manifests/kube-addon-manager.yaml"
     sed -i "s|<kubernetesHyperkubeSpec>|{{WrapAsVariable "kubernetesHyperkubeSpec"}}|g; s|<kubeServiceCidr>|{{WrapAsVariable "kubeServiceCidr"}}|g; s|<masterEtcdClientPort>|{{WrapAsVariable "masterEtcdClientPort"}}|g; s|<masterInternalLbIp>|{{WrapAsVariable "masterInternalLbIp"}}|g" "/etc/kubernetes/manifests/kube-apiserver.yaml"
