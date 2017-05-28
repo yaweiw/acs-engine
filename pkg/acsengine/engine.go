@@ -553,22 +553,6 @@ func (t *TemplateGenerator) getTemplateFuncMap(cs *api.ContainerService) map[str
 
 			return fmt.Sprintf("\"customData\": \"[base64(concat('#cloud-config\\n\\n', '%s'))]\",", str)
 		},
-		"GetMasterAllowedSizes": func() string {
-			if t.ClassicMode {
-				return GetClassicAllowedSizes()
-			} else if cs.Properties.OrchestratorProfile.OrchestratorType == api.DCOS {
-				return GetDCOSMasterAllowedSizes()
-			}
-			return GetMasterAgentAllowedSizes()
-		},
-		"GetAgentAllowedSizes": func() string {
-			if t.ClassicMode {
-				return GetClassicAllowedSizes()
-			} else if cs.Properties.OrchestratorProfile.OrchestratorType == api.Kubernetes {
-				return GetKubernetesAgentAllowedSizes()
-			}
-			return GetMasterAgentAllowedSizes()
-		},
 		"GetSizeMap": func() string {
 			if t.ClassicMode {
 				return GetClassicSizeMap()
@@ -1197,12 +1181,12 @@ write_files:
 
 func getKubernetesSubnets(properties *api.Properties) string {
 	subnetString := `{
-            "name": "podCIDR%d", 
+            "name": "podCIDR%d",
             "properties": {
-              "addressPrefix": "10.244.%d.0/24", 
+              "addressPrefix": "10.244.%d.0/24",
               "networkSecurityGroup": {
                 "id": "[variables('nsgID')]"
-              }, 
+              },
               "routeTable": {
                 "id": "[variables('routeTableID')]"
               }
