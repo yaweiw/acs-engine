@@ -23,14 +23,14 @@
       "ssh": {
         "publicKeys": [
           {
-            "keyData": ""
+            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDNpsptJ/2fPh4DHIMF78m/HHBEsSqdOU/a+A9N0hzdje3MIMEcanruPrt+BpR1v3Rx7qSwc5n9KRXwahG6zu4FeGxYU1nSNIapZVXQag4ERR3VHx8yQN8rDCopayxOkOuVmBGvnrKKjYBCjo+D6pC+PTxnNK+zKZxKzBiMNW6oQoH6JDs6sWukbRSVFHwmP+Nw+ICEgYgmdPEMt3bxWmdvjQ7DrtkpMwPUtnQrzB9tOWetlrMgcmJfA4iEjmFd2fHxriOyIQdyiHNcqgZNWTeI6Mo8sw//REjTv3XvKDriyvOTsT0OetTTroiPY70YQjpcXjdJ+fySQeEh9UBejYVh yaweiwang@yaweis-MBP.guest.corp.microsoft.com"
           }
         ]
       }
     },
     "servicePrincipalProfile": {
-      "servicePrincipalClientID": "",
-      "servicePrincipalClientSecret": ""
+      "servicePrincipalClientID": "61329229-7d5d-4958-acd5-da320a083804",
+      "servicePrincipalClientSecret": "8179254e-7dc2-4a9a-8116-de702c6b003c"
     }
   }
 }
